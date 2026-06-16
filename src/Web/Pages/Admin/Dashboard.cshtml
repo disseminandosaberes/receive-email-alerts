@@ -1,0 +1,125 @@
+@page
+@model InfraStellar.WebRazor.Pages.Admin.DashboardModel
+@{
+    ViewData["Title"] = "Painel Administrativo";
+}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Painel administrativo do InfraStellar — área restrita a administradores." />
+    <title>@ViewData["Title"] — InfraStellar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            color: #fff;
+            padding: 2rem;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #a78bfa, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .badge-admin {
+            background: linear-gradient(135deg, #7c3aed, #4f46e5);
+            padding: 0.3rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .logout-link {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s;
+        }
+        .logout-link:hover { color: #f87171; }
+        h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .subtitle { color: rgba(255,255,255,0.5); font-size: 0.9375rem; margin-bottom: 2rem; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+        }
+        .stat-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        .stat-card:hover { border-color: rgba(167,139,250,0.4); transform: translateY(-2px); }
+        .stat-icon { font-size: 1.75rem; margin-bottom: 0.75rem; }
+        .stat-label { color: rgba(255,255,255,0.5); font-size: 0.8125rem; margin-bottom: 0.25rem; }
+        .stat-value { font-size: 1.5rem; font-weight: 700; }
+        .alert-admin {
+            background: rgba(167,139,250,0.1);
+            border: 1px solid rgba(167,139,250,0.3);
+            border-radius: 0.75rem;
+            padding: 1rem 1.25rem;
+            margin-bottom: 2rem;
+            font-size: 0.875rem;
+            color: #c4b5fd;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <span class="logo">InfraStellar</span>
+        <div style="display:flex;align-items:center;gap:1rem;">
+            <span class="badge-admin">🛡️ Admin</span>
+            <span style="color:rgba(255,255,255,0.5);font-size:0.875rem;">@User.Identity?.Name</span>
+            <form method="post" action="/Account/Logout" style="display:inline">
+                <button type="submit" id="dashboard-logout" class="logout-link" style="background:none;border:none;cursor:pointer;">Sair</button>
+            </form>
+        </div>
+    </header>
+
+    <div class="alert-admin">
+        ✅ Esta página está protegida com <strong>[Authorize(Roles = "Admin")]</strong>. Apenas administradores têm acesso.
+    </div>
+
+    <h1>Painel Administrativo</h1>
+    <p class="subtitle">Visão geral do sistema — área restrita</p>
+
+    <div class="grid">
+        <div class="stat-card">
+            <div class="stat-icon">👥</div>
+            <div class="stat-label">Usuários cadastrados</div>
+            <div class="stat-value" id="stat-usuarios">—</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🔐</div>
+            <div class="stat-label">Perfis configurados</div>
+            <div class="stat-value" id="stat-perfis">—</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🌐</div>
+            <div class="stat-label">Ambiente</div>
+            <div class="stat-value" id="stat-ambiente">Production</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🛡️</div>
+            <div class="stat-label">Autenticação</div>
+            <div class="stat-value" style="font-size:1rem;color:#34d399;" id="stat-auth">Identity + Cookies</div>
+        </div>
+    </div>
+</body>
+</html>

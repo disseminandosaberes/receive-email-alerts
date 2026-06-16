@@ -1,10 +1,98 @@
-﻿@page
+@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Dashboard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+    .home-hero {
+        text-align: center;
+        padding: 4rem 1rem 3rem;
+    }
+
+    .home-hero h1 {
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 700;
+        background: linear-gradient(90deg, #a78bfa, #60a5fa, #34d399);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+    }
+
+    .home-hero p {
+        color: rgba(255,255,255,0.55);
+        font-size: 1.1rem;
+        max-width: 520px;
+        margin: 0 auto 2.5rem;
+        line-height: 1.7;
+    }
+
+    .home-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.25rem;
+        margin-top: 1rem;
+    }
+
+    .home-card {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.09);
+        border-radius: 1rem;
+        padding: 1.75rem 1.5rem;
+        transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .home-card:hover {
+        border-color: rgba(167,139,250,0.35);
+        transform: translateY(-3px);
+    }
+
+    .home-card .icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .home-card h3 { font-size: 1rem; font-weight: 600; color: #fff; margin-bottom: 0.4rem; }
+    .home-card p { font-size: 0.875rem; color: rgba(255,255,255,0.45); margin: 0; line-height: 1.5; }
+
+    .user-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(167,139,250,0.1);
+        border: 1px solid rgba(167,139,250,0.25);
+        border-radius: 999px;
+        padding: 0.4rem 1rem;
+        font-size: 0.875rem;
+        color: #c4b5fd;
+        margin-bottom: 2rem;
+    }
+</style>
+
+<div class="home-hero">
+    <div class="user-pill">
+        👋 Olá, <strong>@User.Identity?.Name</strong>
+    </div>
+    <h1>InfraStellar Platform</h1>
+    <p>Gerencie sua infraestrutura de forma inteligente, segura e escalável.</p>
+</div>
+
+<div class="home-cards">
+    <div class="home-card">
+        <div class="icon">🚀</div>
+        <h3>Deploy Rápido</h3>
+        <p>Provisione recursos em segundos com templates pré-configurados.</p>
+    </div>
+    <div class="home-card">
+        <div class="icon">🔐</div>
+        <h3>Segurança</h3>
+        <p>Autenticação Identity com hash PBKDF2 e controle por perfis.</p>
+    </div>
+    <div class="home-card">
+        <div class="icon">📊</div>
+        <h3>Monitoramento</h3>
+        <p>Acompanhe métricas e logs em tempo real da sua infraestrutura.</p>
+    </div>
+    <div class="home-card">
+        <div class="icon">⚙️</div>
+        <h3>Automação</h3>
+        <p>Pipelines e workflows para operações repetitivas sem esforço manual.</p>
+    </div>
 </div>

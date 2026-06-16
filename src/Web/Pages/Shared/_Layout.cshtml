@@ -1,51 +1,195 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - InfraStellar.WebRazor</title>
+    <title>@ViewData["Title"] — InfraStellar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/InfraStellar.WebRazor.styles.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            background-attachment: fixed;
+            color: #fff;
+        }
+
+        /* ── Navbar ── */
+        .navbar-stellar {
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding: 0.75rem 1.5rem;
+        }
+
+        .navbar-stellar .navbar-brand {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #a78bfa, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .navbar-stellar .nav-link {
+            color: rgba(255,255,255,0.65) !important;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            padding: 0.25rem 0.75rem;
+        }
+
+        .navbar-stellar .nav-link:hover { color: #fff !important; }
+
+        .navbar-stellar .navbar-toggler {
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .navbar-stellar .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.6%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        .nav-user-name {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.8125rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-user-name strong { color: rgba(255,255,255,0.85); margin-left: 0.25rem; }
+
+        .btn-nav-logout {
+            background: transparent;
+            border: 1px solid rgba(248,113,113,0.4);
+            color: #f87171;
+            border-radius: 0.5rem;
+            padding: 0.3rem 0.9rem;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .btn-nav-logout:hover {
+            background: rgba(248,113,113,0.12);
+            color: #fca5a5;
+        }
+
+        .btn-nav-login {
+            background: linear-gradient(135deg, #7c3aed, #4f46e5);
+            border: none;
+            color: #fff;
+            border-radius: 0.5rem;
+            padding: 0.35rem 1.1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.1s;
+            display: inline-block;
+        }
+
+        .btn-nav-login:hover { opacity: 0.9; transform: translateY(-1px); color: #fff; }
+
+        .badge-admin {
+            background: linear-gradient(135deg, #7c3aed44, #4f46e544);
+            border: 1px solid rgba(167,139,250,0.3);
+            color: #c4b5fd;
+            border-radius: 999px;
+            padding: 0.2rem 0.6rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        /* ── Main content area ── */
+        .site-main {
+            min-height: calc(100vh - 57px);
+            padding: 2rem 0;
+        }
+
+        /* ── Footer ── */
+        .site-footer {
+            border-top: 1px solid rgba(255,255,255,0.07);
+            padding: 1rem 1.5rem;
+            text-align: center;
+            color: rgba(255,255,255,0.3);
+            font-size: 0.8125rem;
+        }
+
+        .site-footer a { color: rgba(167,139,250,0.7); text-decoration: none; }
+        .site-footer a:hover { color: #a78bfa; }
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">InfraStellar.WebRazor</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+
+    <nav class="navbar navbar-expand-sm navbar-stellar">
+        <div class="container-fluid px-3">
+            <a class="navbar-brand" asp-page="/Index">⭐ InfraStellar</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain"
+                    aria-controls="navMain" aria-expanded="false" aria-label="Menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navMain">
+                <ul class="navbar-nav me-auto mb-0">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Privacy">Privacy</a>
+                    </li>
+                    @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+                    {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link" asp-page="/Admin/Dashboard">⚙️ Admin</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                    </ul>
+                    }
+                </ul>
+
+                <div class="d-flex align-items-center gap-3">
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <span class="nav-user-name">Olá,<strong>@User.Identity.Name</strong></span>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <span class="badge-admin">Admin</span>
+                        }
+                        <form method="post" asp-page="/Account/Logout" class="m-0">
+                            <button type="submit" id="nav-logout-btn" class="btn-nav-logout">Sair</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <a id="nav-login-btn" class="btn-nav-login" asp-page="/Account/Login">Entrar</a>
+                    }
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - InfraStellar.WebRazor - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
+    </nav>
+
+    <main class="site-main">
+        <div class="container">
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        &copy; 2026 InfraStellar &mdash; <a asp-page="/Privacy">Privacy</a>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -1,0 +1,57 @@
+@page
+@model InfraStellar.WebRazor.Pages.Account.AccessDeniedModel
+@{
+    ViewData["Title"] = "Acesso Negado";
+}
+
+@section Styles {
+<style>
+    .auth-bg {
+        background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+        min-height: calc(100vh - 56px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 1rem;
+        margin: -1rem -12px 0;
+        text-align: center;
+    }
+
+    .auth-card {
+        background: rgba(255,255,255,0.05);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(248,113,113,0.2);
+        border-radius: 1.25rem;
+        padding: 3rem 2rem;
+        max-width: 420px;
+        box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+    }
+
+    .auth-card .icon { font-size: 3.5rem; margin-bottom: 1rem; }
+    .auth-card h1 { font-size: 1.5rem; font-weight: 700; color: #f87171; margin-bottom: 0.75rem; }
+    .auth-card p { color: rgba(255,255,255,0.55); font-size: 0.9375rem; line-height: 1.6; margin-bottom: 2rem; }
+
+    .auth-btn-back {
+        display: inline-block;
+        padding: 0.75rem 1.75rem;
+        background: linear-gradient(135deg, #7c3aed, #4f46e5);
+        border-radius: 0.625rem;
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9375rem;
+        transition: opacity 0.2s, transform 0.1s;
+    }
+
+    .auth-btn-back:hover { opacity: 0.9; transform: translateY(-1px); color: #fff; }
+</style>
+}
+
+<div class="auth-bg">
+    <div class="auth-card">
+        <div class="icon">🔒</div>
+        <h1>Acesso Negado</h1>
+        <p>Você não tem permissão para acessar esta página. Entre em contato com um administrador se acredita que isso é um engano.</p>
+        <a asp-page="/Index" id="access-denied-home" class="auth-btn-back">Voltar ao início</a>
+    </div>
+</div>
