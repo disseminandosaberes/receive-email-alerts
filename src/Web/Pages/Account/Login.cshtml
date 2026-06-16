@@ -2,189 +2,155 @@
 @model InfraStellar.WebRazor.Pages.Account.LoginModel
 @{
     ViewData["Title"] = "Entrar";
-    Layout = null;
 }
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Acesse sua conta InfraStellar e gerencie sua infraestrutura na nuvem." />
-    <title>@ViewData["Title"] — InfraStellar</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem 1rem;
-        }
+@section Styles {
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+    .auth-page { font-family: 'Inter', sans-serif; }
 
-        .card {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 1.25rem;
-            padding: 2.5rem 2rem;
-            width: 100%;
-            max-width: 420px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
-        }
+    .auth-bg {
+        background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+        min-height: calc(100vh - 56px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 1rem;
+        margin: -1rem -12px 0;
+    }
 
-        .brand {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
+    .auth-card {
+        background: rgba(255,255,255,0.05);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 1.25rem;
+        padding: 2.5rem 2rem;
+        width: 100%;
+        max-width: 420px;
+        box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+    }
 
-        .brand h1 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, #a78bfa, #60a5fa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+    .auth-brand { text-align: center; margin-bottom: 2rem; }
 
-        .brand p {
-            color: rgba(255,255,255,0.5);
-            font-size: 0.875rem;
-            margin-top: 0.25rem;
-        }
+    .auth-brand h1 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        background: linear-gradient(90deg, #a78bfa, #60a5fa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
 
-        .alert-success {
-            background: rgba(52, 211, 153, 0.1);
-            border: 1px solid rgba(52, 211, 153, 0.3);
-            border-radius: 0.625rem;
-            padding: 0.75rem 1rem;
-            margin-bottom: 1.25rem;
-            color: #34d399;
-            font-size: 0.8125rem;
-        }
+    .auth-brand p { color: rgba(255,255,255,0.5); font-size: 0.875rem; margin-top: 0.25rem; }
 
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
+    .auth-alert-success {
+        background: rgba(52, 211, 153, 0.1);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+        border-radius: 0.625rem;
+        padding: 0.75rem 1rem;
+        margin-bottom: 1.25rem;
+        color: #34d399;
+        font-size: 0.8125rem;
+    }
 
-        label {
-            display: block;
-            font-size: 0.8125rem;
-            font-weight: 500;
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 0.4rem;
-            letter-spacing: 0.03em;
-        }
+    .auth-form-group { margin-bottom: 1.25rem; }
 
-        input[type="email"],
-        input[type="password"] {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            background: rgba(255,255,255,0.07);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 0.625rem;
-            color: #fff;
-            font-size: 0.9375rem;
-            font-family: inherit;
-            transition: border-color 0.2s, box-shadow 0.2s;
-            outline: none;
-        }
+    .auth-card label {
+        display: block;
+        font-size: 0.8125rem;
+        font-weight: 500;
+        color: rgba(255,255,255,0.7);
+        margin-bottom: 0.4rem;
+        letter-spacing: 0.03em;
+    }
 
-        input[type="email"]:focus,
-        input[type="password"]:focus {
-            border-color: #a78bfa;
-            box-shadow: 0 0 0 3px rgba(167,139,250,0.2);
-        }
+    .auth-card input[type="email"],
+    .auth-card input[type="password"] {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        background: rgba(255,255,255,0.07);
+        border: 1px solid rgba(255,255,255,0.15);
+        border-radius: 0.625rem;
+        color: #fff;
+        font-size: 0.9375rem;
+        font-family: 'Inter', sans-serif;
+        transition: border-color 0.2s, box-shadow 0.2s;
+        outline: none;
+    }
 
-        .remember-row {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
+    .auth-card input[type="email"]:focus,
+    .auth-card input[type="password"]:focus {
+        border-color: #a78bfa;
+        box-shadow: 0 0 0 3px rgba(167,139,250,0.2);
+    }
 
-        .remember-row input[type="checkbox"] {
-            width: 1rem;
-            height: 1rem;
-            accent-color: #7c3aed;
-            cursor: pointer;
-        }
+    .auth-remember {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+    }
 
-        .remember-row label {
-            margin: 0;
-            font-size: 0.875rem;
-            cursor: pointer;
-        }
+    .auth-remember input[type="checkbox"] {
+        width: 1rem; height: 1rem;
+        accent-color: #7c3aed; cursor: pointer;
+    }
 
-        .field-validation-error {
-            color: #f87171;
-            font-size: 0.75rem;
-            margin-top: 0.3rem;
-            display: block;
-        }
+    .auth-remember label { margin: 0; font-size: 0.875rem; cursor: pointer; }
 
-        .validation-summary-errors ul {
-            list-style: none;
-            background: rgba(248, 113, 113, 0.1);
-            border: 1px solid rgba(248, 113, 113, 0.3);
-            border-radius: 0.625rem;
-            padding: 0.75rem 1rem;
-            margin-bottom: 1.25rem;
-        }
+    .field-validation-error { color: #f87171; font-size: 0.75rem; margin-top: 0.3rem; display: block; }
 
-        .validation-summary-errors li {
-            color: #f87171;
-            font-size: 0.8125rem;
-        }
+    .validation-summary-errors ul {
+        list-style: none;
+        background: rgba(248,113,113,0.1);
+        border: 1px solid rgba(248,113,113,0.3);
+        border-radius: 0.625rem;
+        padding: 0.75rem 1rem;
+        margin-bottom: 1.25rem;
+    }
 
-        .btn-primary {
-            width: 100%;
-            padding: 0.8125rem;
-            background: linear-gradient(135deg, #7c3aed, #4f46e5);
-            border: none;
-            border-radius: 0.625rem;
-            color: #fff;
-            font-size: 0.9375rem;
-            font-weight: 600;
-            font-family: inherit;
-            cursor: pointer;
-            transition: opacity 0.2s, transform 0.1s;
-        }
+    .validation-summary-errors li { color: #f87171; font-size: 0.8125rem; }
 
-        .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
-        .btn-primary:active { transform: translateY(0); }
+    .auth-btn {
+        width: 100%;
+        padding: 0.8125rem;
+        background: linear-gradient(135deg, #7c3aed, #4f46e5);
+        border: none;
+        border-radius: 0.625rem;
+        color: #fff;
+        font-size: 0.9375rem;
+        font-weight: 600;
+        font-family: 'Inter', sans-serif;
+        cursor: pointer;
+        transition: opacity 0.2s, transform 0.1s;
+    }
 
-        .footer-link {
-            text-align: center;
-            margin-top: 1.5rem;
-            font-size: 0.875rem;
-            color: rgba(255,255,255,0.5);
-        }
+    .auth-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .auth-btn:active { transform: translateY(0); }
 
-        .footer-link a {
-            color: #a78bfa;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
+    .auth-footer-link {
+        text-align: center;
+        margin-top: 1.5rem;
+        font-size: 0.875rem;
+        color: rgba(255,255,255,0.5);
+    }
 
-        .footer-link a:hover { color: #c4b5fd; }
-    </style>
-</head>
-<body>
-    <div class="card">
-        <div class="brand">
+    .auth-footer-link a { color: #a78bfa; text-decoration: none; font-weight: 500; }
+    .auth-footer-link a:hover { color: #c4b5fd; }
+</style>
+}
+
+<div class="auth-page auth-bg">
+    <div class="auth-card">
+        <div class="auth-brand">
             <h1>InfraStellar</h1>
             <p>Acesse sua conta</p>
         </div>
 
         @if (Model.CadastroRealizadoComSucesso)
         {
-            <div class="alert-success">
+            <div class="auth-alert-success">
                 ✓ Conta criada com sucesso! Faça login para continuar.
             </div>
         }
@@ -192,29 +158,28 @@
         <div asp-validation-summary="ModelOnly" class="validation-summary-errors"></div>
 
         <form method="post" id="loginForm">
-            <div class="form-group">
+            <div class="auth-form-group">
                 <label asp-for="Input.Email">E-mail</label>
                 <input asp-for="Input.Email" id="login-email" type="email" placeholder="seu@email.com" autocomplete="email" />
                 <span asp-validation-for="Input.Email" class="field-validation-error"></span>
             </div>
 
-            <div class="form-group">
+            <div class="auth-form-group">
                 <label asp-for="Input.Senha">Senha</label>
                 <input asp-for="Input.Senha" id="login-senha" type="password" placeholder="Sua senha" autocomplete="current-password" />
                 <span asp-validation-for="Input.Senha" class="field-validation-error"></span>
             </div>
 
-            <div class="remember-row">
+            <div class="auth-remember">
                 <input asp-for="Input.LembrarMe" id="login-lembrar" type="checkbox" />
                 <label asp-for="Input.LembrarMe">Lembrar-me neste dispositivo</label>
             </div>
 
-            <button type="submit" id="login-submit" class="btn-primary">Entrar</button>
+            <button type="submit" id="login-submit" class="auth-btn">Entrar</button>
         </form>
 
-        <div class="footer-link">
-            Não tem conta? <a href="/Account/Register">Criar conta</a>
+        <div class="auth-footer-link">
+            Não tem conta? <a asp-page="/Account/Register">Criar conta</a>
         </div>
     </div>
-</body>
-</html>
+</div>
