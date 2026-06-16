@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -25,6 +25,31 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <li class="nav-item d-flex align-items-center me-2">
+                                <span class="text-muted small">Olá, <strong>@User.Identity.Name</strong></span>
+                            </li>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/Admin/Dashboard">⚙️ Admin</a>
+                                </li>
+                            }
+                            <li class="nav-item">
+                                <form method="post" action="/Account/Logout">
+                                    <button type="submit" id="nav-logout-btn" class="btn btn-outline-danger btn-sm">Sair</button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a id="nav-login-btn" class="btn btn-primary btn-sm" asp-page="/Account/Login">Entrar</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
