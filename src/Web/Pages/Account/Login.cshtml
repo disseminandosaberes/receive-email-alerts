@@ -5,19 +5,12 @@
 }
 
 @section Styles {
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 <style>
-    .auth-page { font-family: 'Inter', sans-serif; }
-
-    .auth-bg {
-        background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-        min-height: calc(100vh - 56px);
+    .auth-wrap {
         display: flex;
-        align-items: center;
         justify-content: center;
-        padding: 2rem 1rem;
-        margin: -1rem -12px 0;
+        align-items: flex-start;
+        padding-top: 3rem;
     }
 
     .auth-card {
@@ -33,20 +26,21 @@
 
     .auth-brand { text-align: center; margin-bottom: 2rem; }
 
-    .auth-brand h1 {
-        font-size: 1.75rem;
+    .auth-brand h2 {
+        font-size: 1.5rem;
         font-weight: 700;
         background: linear-gradient(90deg, #a78bfa, #60a5fa);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
+        margin: 0;
     }
 
-    .auth-brand p { color: rgba(255,255,255,0.5); font-size: 0.875rem; margin-top: 0.25rem; }
+    .auth-brand p { color: rgba(255,255,255,0.5); font-size: 0.875rem; margin-top: 0.3rem; }
 
     .auth-alert-success {
-        background: rgba(52, 211, 153, 0.1);
-        border: 1px solid rgba(52, 211, 153, 0.3);
+        background: rgba(52,211,153,0.1);
+        border: 1px solid rgba(52,211,153,0.3);
         border-radius: 0.625rem;
         padding: 0.75rem 1rem;
         margin-bottom: 1.25rem;
@@ -95,9 +89,10 @@
     .auth-remember input[type="checkbox"] {
         width: 1rem; height: 1rem;
         accent-color: #7c3aed; cursor: pointer;
+        flex-shrink: 0;
     }
 
-    .auth-remember label { margin: 0; font-size: 0.875rem; cursor: pointer; }
+    .auth-remember label { margin: 0; font-size: 0.875rem; cursor: pointer; color: rgba(255,255,255,0.65); }
 
     .field-validation-error { color: #f87171; font-size: 0.75rem; margin-top: 0.3rem; display: block; }
 
@@ -133,7 +128,7 @@
         text-align: center;
         margin-top: 1.5rem;
         font-size: 0.875rem;
-        color: rgba(255,255,255,0.5);
+        color: rgba(255,255,255,0.45);
     }
 
     .auth-footer-link a { color: #a78bfa; text-decoration: none; font-weight: 500; }
@@ -141,11 +136,11 @@
 </style>
 }
 
-<div class="auth-page auth-bg">
+<div class="auth-wrap">
     <div class="auth-card">
         <div class="auth-brand">
-            <h1>InfraStellar</h1>
-            <p>Acesse sua conta</p>
+            <h2>Bem-vindo de volta</h2>
+            <p>Acesse sua conta InfraStellar</p>
         </div>
 
         @if (Model.CadastroRealizadoComSucesso)
