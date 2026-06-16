@@ -14,7 +14,7 @@ src/
 
 ## Tecnologias
 
-- [.NET 8](https://dotnet.microsoft.com/)
+- [.NET 10](https://dotnet.microsoft.com/)
 - ASP.NET Core Razor Pages
 - Clean Architecture
 
