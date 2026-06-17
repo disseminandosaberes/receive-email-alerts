@@ -159,7 +159,18 @@
                 <div class="d-flex align-items-center gap-3">
                     @if (User.Identity?.IsAuthenticated == true)
                     {
-                        <span class="nav-user-name">Olá,<strong>@User.Identity.Name</strong></span>
+                        var avatarId = User.FindFirst("AvatarId")?.Value;
+                        <a asp-page="/Account/Profile" class="d-flex align-items-center gap-2 text-decoration-none" id="nav-profile-link" style="color: inherit;" title="Acessar meu perfil">
+                            @if (!string.IsNullOrEmpty(avatarId))
+                            {
+                                <img src="/Account/Profile?handler=Avatar&id=@avatarId" alt="Avatar" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 1.5px solid rgba(167,139,250,0.5);" />
+                            }
+                            else
+                            {
+                                <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; font-size: 0.875rem; border: 1px dashed rgba(255,255,255,0.2);">👤</div>
+                            }
+                            <span class="nav-user-name">Olá, <strong>@(User.FindFirst("Nome")?.Value ?? User.Identity?.Name)</strong></span>
+                        </a>
                         @if (User.IsInRole("Admin"))
                         {
                             <span class="badge-admin">Admin</span>

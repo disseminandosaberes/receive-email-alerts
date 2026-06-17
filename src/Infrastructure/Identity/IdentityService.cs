@@ -44,4 +44,10 @@ public class IdentityService : IIdentityService
     {
         await _signInManager.SignOutAsync();
     }
+
+    public async Task<bool> EmailJaCadastradoAsync(string email)
+    {
+        var usuario = await _userManager.FindByEmailAsync(email);
+        return usuario != null;
+    }
 }

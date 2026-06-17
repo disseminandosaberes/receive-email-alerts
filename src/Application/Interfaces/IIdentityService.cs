@@ -7,4 +7,5 @@ public interface IIdentityService
     Task<bool> RegistrarUsuarioAsync(CadastroInputDto dto);
     Task<bool> LogarUsuarioAsync(LoginInputDto dto);
     Task DeslogarUsuarioAsync();
+    Task<bool> EmailJaCadastradoAsync(string email);
 }

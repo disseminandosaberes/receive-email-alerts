@@ -11,5 +11,10 @@ public class UsuarioConfiguration : IEntityTypeConfiguration<Usuario>
         builder.Property(u => u.Nome)
             .IsRequired()
             .HasMaxLength(150);
+
+        builder.HasOne(u => u.Avatar)
+            .WithMany()
+            .HasForeignKey(u => u.AvatarId)
+            .OnDelete(DeleteBehavior.SetNull);
     }
 }
