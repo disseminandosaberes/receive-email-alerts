@@ -1,0 +1,79 @@
+@page
+@model InfraStellar.WebRazor.Pages.Alertas.HistoricoModel
+@{
+    ViewData["Title"] = $"Histórico — {Model.AlertaNome}";
+}
+
+<div class="d-flex align-items-center gap-3 mb-4 flex-wrap">
+    <a href="/Alertas/Index" class="btn btn-outline-secondary">← Voltar</a>
+    <h1 class="h3 fw-bold text-dark mb-0">📋 @Model.AlertaNome</h1>
+    @if (Model.Resultados.Any())
+    {
+        <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill">@Model.Resultados.Count resultados</span>
+    }
+</div>
+
+@if (!Model.Resultados.Any())
+{
+    <div class="card border-0 shadow-sm rounded-3 p-5 text-center">
+        <div class="display-4 mb-3 text-secondary">📭</div>
+        <p class="lead text-secondary mb-0">Nenhum resultado encontrado para este alerta ainda.</p>
+    </div>
+}
+else
+{
+    <div class="d-flex flex-column gap-3">
+        @foreach (var resultado in Model.Resultados)
+        {
+            <div class="card border-0 border-start border-4 @(resultado.Sucesso ? "border-success" : "border-danger") shadow-sm rounded-3 p-3">
+                <div class="d-flex align-items-start gap-3 w-100">
+                    <div class="fs-4 flex-shrink-0">
+                        @(resultado.Sucesso ? "✅" : "❌")
+                    </div>
+
+                    <div class="flex-grow-1 min-w-0">
+                        @if (resultado.Sucesso)
+                        {
+                            @if (resultado.NovaPublicacaoDetectada)
+                            {
+                                <span class="badge bg-success-subtle text-success border border-success-subtle rounded mb-2" style="font-size: 0.7rem; letter-spacing: 0.05em;">
+                                    🆕 Nova Publicação
+                                </span>
+                            }
+                            <div class="fw-bold text-dark mb-1 small text-break">@resultado.TituloPublicacao</div>
+                            <div class="small text-secondary d-flex align-items-center gap-3 flex-wrap">
+                                <span>📅 @resultado.DataPublicacao</span>
+                                @if (!string.IsNullOrEmpty(resultado.LinkPublicacao))
+                                {
+                                    <a href="@resultado.LinkPublicacao" target="_blank" rel="noopener" class="text-primary text-decoration-none fw-bold d-inline-flex align-items-center gap-1">
+                                        📄 Ver edital
+                                    </a>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="text-danger small fst-italic text-break">@resultado.MensagemErro</div>
+                        }
+                    </div>
+
+                    <div class="small text-secondary text-end flex-shrink-0 ps-2" style="font-size: 0.75rem; line-height: 1.3;">
+                        <div>@resultado.ExecutadoEm.ToLocalTime().ToString("dd/MM/yyyy")</div>
+                        <div class="fw-bold text-dark">@resultado.ExecutadoEm.ToLocalTime().ToString("HH:mm:ss")</div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <nav aria-label="Navegação do histórico" class="d-flex justify-content-center mt-4">
+        <ul class="pagination mb-0">
+            <li class="page-item @(Model.Pagina <= 1 ? "disabled" : "")">
+                <a class="page-link" href="?alertaId=@Model.AlertaId&pagina=@(Model.Pagina - 1)">← Anterior</a>
+            </li>
+            <li class="page-item @(Model.Resultados.Count < 20 ? "disabled" : "")">
+                <a class="page-link" href="?alertaId=@Model.AlertaId&pagina=@(Model.Pagina + 1)">Próxima →</a>
+            </li>
+        </ul>
+    </nav>
+}

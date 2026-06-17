@@ -3,165 +3,87 @@
 @{
     ViewData["Title"] = "Painel Administrativo";
 }
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Painel administrativo do InfraStellar — área restrita a administradores." />
-    <title>@ViewData["Title"] — InfraStellar</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            min-height: 100vh;
-            color: #fff;
-            padding: 2rem;
-        }
-        header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 2.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, #a78bfa, #60a5fa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .badge-admin {
-            background: linear-gradient(135deg, #7c3aed, #4f46e5);
-            padding: 0.3rem 0.75rem;
-            border-radius: 999px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-        .logout-link {
-            color: rgba(255,255,255,0.5);
-            text-decoration: none;
-            font-size: 0.875rem;
-            transition: color 0.2s;
-        }
-        .logout-link:hover { color: #f87171; }
-        h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; }
-        .subtitle { color: rgba(255,255,255,0.5); font-size: 0.9375rem; margin-bottom: 2rem; }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.25rem;
-        }
-        .stat-card {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            transition: border-color 0.2s, transform 0.2s;
-        }
-        .stat-card:hover { border-color: rgba(167,139,250,0.4); transform: translateY(-2px); }
-        .stat-icon { font-size: 1.75rem; margin-bottom: 0.75rem; }
-        .stat-label { color: rgba(255,255,255,0.5); font-size: 0.8125rem; margin-bottom: 0.25rem; }
-        .stat-value { font-size: 1.5rem; font-weight: 700; }
-        .alert-admin {
-            background: rgba(167,139,250,0.1);
-            border: 1px solid rgba(167,139,250,0.3);
-            border-radius: 0.75rem;
-            padding: 1rem 1.25rem;
-            margin-bottom: 2rem;
-            font-size: 0.875rem;
-            color: #c4b5fd;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <span class="logo">InfraStellar</span>
-        <div style="display:flex;align-items:center;gap:1rem;">
-            <span class="badge-admin">🛡️ Admin</span>
-            <span style="color:rgba(255,255,255,0.5);font-size:0.875rem;">@(User.FindFirst("Nome")?.Value ?? User.Identity?.Name)</span>
-            <form method="post" action="/Account/Logout" style="display:inline">
-                <button type="submit" id="dashboard-logout" class="logout-link" style="background:none;border:none;cursor:pointer;">Sair</button>
-            </form>
-        </div>
-    </header>
 
-    <div class="alert-admin">
-        ✅ Esta página está protegida com <strong>[Authorize(Roles = "Admin")]</strong>. Apenas administradores têm acesso.
-    </div>
+<div class="alert alert-primary border-0 shadow-sm rounded-3 p-3 mb-4 fw-medium" role="alert">
+    ✅ Esta página está protegida com <strong>[Authorize(Roles = "Admin")]</strong>. Apenas administradores têm acesso.
+</div>
 
-    <h1>Painel Administrativo</h1>
-    <p class="subtitle">Visão geral do sistema — área restrita</p>
+<div class="mb-4">
+    <h1 class="h3 fw-bold text-dark mb-1">Painel Administrativo</h1>
+    <p class="text-secondary small mb-0">Visão geral do sistema — área restrita</p>
+</div>
 
-    <div class="grid">
-        <div class="stat-card">
-            <div class="stat-icon">👥</div>
-            <div class="stat-label">Usuários cadastrados</div>
-            <div class="stat-value" id="stat-usuarios">@Model.TotalUsers</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">🔐</div>
-            <div class="stat-label">Perfis configurados</div>
-            <div class="stat-value" id="stat-perfis">@Model.TotalRoles</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">🌐</div>
-            <div class="stat-label">Ambiente</div>
-            <div class="stat-value" id="stat-ambiente">Development</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">🛡️</div>
-            <div class="stat-label">Autenticação</div>
-            <div class="stat-value" style="font-size:1rem;color:#34d399;" id="stat-auth">Identity + Cookies</div>
+<div class="row g-4 mb-5">
+    <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 shadow-sm rounded-3 p-4 h-100">
+            <div class="display-6 mb-2">👥</div>
+            <div class="text-secondary fw-bold text-uppercase mb-1" style="font-size: 0.72rem; letter-spacing: 0.05em;">Usuários cadastrados</div>
+            <div class="h3 fw-bold text-dark mb-0" id="stat-usuarios">@Model.TotalUsers</div>
         </div>
     </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 shadow-sm rounded-3 p-4 h-100">
+            <div class="display-6 mb-2">🔐</div>
+            <div class="text-secondary fw-bold text-uppercase mb-1" style="font-size: 0.72rem; letter-spacing: 0.05em;">Perfis configurados</div>
+            <div class="h3 fw-bold text-dark mb-0" id="stat-perfis">@Model.TotalRoles</div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 shadow-sm rounded-3 p-4 h-100">
+            <div class="display-6 mb-2">🌐</div>
+            <div class="text-secondary fw-bold text-uppercase mb-1" style="font-size: 0.72rem; letter-spacing: 0.05em;">Ambiente</div>
+            <div class="h3 fw-bold text-dark mb-0" id="stat-ambiente">Development</div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 shadow-sm rounded-3 p-4 h-100">
+            <div class="display-6 mb-2">🛡️</div>
+            <div class="text-secondary fw-bold text-uppercase mb-1" style="font-size: 0.72rem; letter-spacing: 0.05em;">Autenticação</div>
+            <div class="h4 fw-bold text-success mb-0" id="stat-auth">Identity + Cookies</div>
+        </div>
+    </div>
+</div>
 
-    <div class="role-requests-section" style="margin-top: 2.5rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 1rem; padding: 2rem;">
-        <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1.25rem;">Solicitações de Perfis Pendentes</h2>
-        
-        @if (Model.PendingRequests.Any())
-        {
-            <table style="width: 100%; border-collapse: collapse; font-size: 0.875rem;">
-                <thead>
-                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-                        <th style="padding: 0.75rem 0.5rem; text-align: left; color: rgba(255,255,255,0.4); font-weight: 500;">Usuário</th>
-                        <th style="padding: 0.75rem 0.5rem; text-align: left; color: rgba(255,255,255,0.4); font-weight: 500;">E-mail</th>
-                        <th style="padding: 0.75rem 0.5rem; text-align: left; color: rgba(255,255,255,0.4); font-weight: 500;">Perfil Solicitado</th>
-                        <th style="padding: 0.75rem 0.5rem; text-align: left; color: rgba(255,255,255,0.4); font-weight: 500;">Data</th>
-                        <th style="padding: 0.75rem 0.5rem; text-align: right; color: rgba(255,255,255,0.4); font-weight: 500;">Ações</th>
+<div class="card border-0 shadow-sm rounded-3 p-4 p-md-5">
+    <h2 class="h5 fw-bold text-dark mb-3">Solicitações de Perfis Pendentes</h2>
+    
+    @if (Model.PendingRequests.Any())
+    {
+        <div class="table-responsive border rounded-3 bg-white">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="small text-uppercase text-secondary fw-bold" style="font-size: 0.75rem; letter-spacing: 0.05em;">Usuário</th>
+                        <th class="small text-uppercase text-secondary fw-bold" style="font-size: 0.75rem; letter-spacing: 0.05em;">E-mail</th>
+                        <th class="small text-uppercase text-secondary fw-bold" style="font-size: 0.75rem; letter-spacing: 0.05em;">Perfil Solicitado</th>
+                        <th class="small text-uppercase text-secondary fw-bold" style="font-size: 0.75rem; letter-spacing: 0.05em;">Data</th>
+                        <th class="small text-uppercase text-secondary fw-bold text-end" style="font-size: 0.75rem; letter-spacing: 0.05em;">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var request in Model.PendingRequests)
                     {
-                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                            <td style="padding: 0.75rem 0.5rem;">@request.Usuario?.Nome</td>
-                            <td style="padding: 0.75rem 0.5rem; color: rgba(255,255,255,0.5);">@request.Usuario?.Email</td>
-                            <td style="padding: 0.75rem 0.5rem;"><span style="background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.25); color: #c4b5fd; border-radius: 999px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600;">@request.RoleNome</span></td>
-                            <td style="padding: 0.75rem 0.5rem;">@request.DataSolicitacao.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
-                            <td style="padding: 0.75rem 0.5rem; text-align: right;">
-                                <form method="post" style="display: inline-block; margin-right: 0.5rem;">
-                                    <button type="submit" asp-page-handler="ApproveRequest" asp-route-id="@request.Id" class="btn-approve" style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: #10b981; padding: 0.35rem 0.75rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: background 0.2s;">Aprovar</button>
+                        <tr>
+                            <td><strong>@request.Usuario?.Nome</strong></td>
+                            <td class="text-secondary">@request.Usuario?.Email</td>
+                            <td><span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill">@request.RoleNome</span></td>
+                            <td>@request.DataSolicitacao.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
+                            <td class="text-end" style="white-space: nowrap;">
+                                <form method="post" style="display: inline-block; margin-right: 0.5rem; margin-bottom: 0;">
+                                    <button type="submit" asp-page-handler="ApproveRequest" asp-route-id="@request.Id" class="btn btn-sm btn-success px-3 fw-semibold">Aprovar</button>
                                 </form>
-                                <form method="post" style="display: inline-block;">
-                                    <button type="submit" asp-page-handler="RejectRequest" asp-route-id="@request.Id" class="btn-reject" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #ef4444; padding: 0.35rem 0.75rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: background 0.2s;">Rejeitar</button>
+                                <form method="post" style="display: inline-block; margin-bottom: 0;">
+                                    <button type="submit" asp-page-handler="RejectRequest" asp-route-id="@request.Id" class="btn btn-sm btn-danger px-3 fw-semibold">Rejeitar</button>
                                 </form>
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
-        }
-        else
-        {
-            <div style="color: rgba(255,255,255,0.4); font-size: 0.875rem; text-align: center; padding: 1.5rem 0;">Nenhuma solicitação de perfil pendente.</div>
-        }
-    </div>
-</body>
-</html>
+        </div>
+    }
+    else
+    {
+        <div class="text-secondary small text-center py-4">Nenhuma solicitação de perfil pendente.</div>
+    }
+</div>

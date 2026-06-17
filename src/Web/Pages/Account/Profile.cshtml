@@ -6,86 +6,7 @@
 
 @section Styles {
 <style>
-    .profile-container {
-        max-width: 900px;
-        margin: 2rem auto;
-    }
-
-    .profile-card {
-        background: rgba(255, 255, 255, 0.04);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 1.25rem;
-        padding: 2.5rem;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    }
-
-    .profile-title {
-        font-size: 1.75rem;
-        font-weight: 700;
-        background: linear-gradient(90deg, #a78bfa, #60a5fa);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 0.5rem;
-    }
-
-    .profile-subtitle {
-        color: rgba(255, 255, 255, 0.5);
-        font-size: 0.9375rem;
-        margin-bottom: 2rem;
-    }
-
-    .profile-section-title {
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: #fff;
-        margin-bottom: 1.25rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        padding-bottom: 0.5rem;
-    }
-
-    .form-group {
-        margin-bottom: 1.5rem;
-    }
-
-    .profile-card label {
-        display: block;
-        font-size: 0.8125rem;
-        font-weight: 500;
-        color: rgba(255, 255, 255, 0.7);
-        margin-bottom: 0.5rem;
-        letter-spacing: 0.03em;
-    }
-
-    .profile-card input[type="text"],
-    .profile-card input[type="email"] {
-        width: 100%;
-        padding: 0.75rem 1rem;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 0.625rem;
-        color: #fff;
-        font-size: 0.9375rem;
-        outline: none;
-        transition: border-color 0.2s, box-shadow 0.2s;
-    }
-
-    .profile-card input[type="text"]:focus {
-        border-color: #a78bfa;
-        box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.2);
-    }
-
-    .profile-card input[readonly] {
-        background: rgba(255, 255, 255, 0.02);
-        color: rgba(255, 255, 255, 0.4);
-        cursor: not-allowed;
-    }
-
-    .avatar-selection-container {
-        margin-bottom: 2rem;
-    }
-
+    /* Estilos locais específicos para o componente interativo de grade de avatares */
     .avatar-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
@@ -100,20 +21,21 @@
         overflow: hidden;
         border: 2px solid transparent;
         cursor: pointer;
-        transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-        background: rgba(255, 255, 255, 0.03);
+        transition: all 0.2s ease;
+        background-color: #f1f5f9;
         padding: 4px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
 
     .avatar-item:hover {
         transform: scale(1.08);
-        border-color: rgba(167, 139, 250, 0.5);
+        border-color: #3b82f6;
     }
 
     .avatar-item.active {
-        border-color: #a78bfa;
-        box-shadow: 0 0 12px rgba(167, 139, 250, 0.5);
-        background: rgba(167, 139, 250, 0.15);
+        border-color: #3b82f6;
+        box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+        background-color: #eff6ff;
     }
 
     .avatar-item img {
@@ -122,121 +44,28 @@
         object-fit: cover;
         border-radius: 50%;
     }
-
-    .btn-stellar {
-        padding: 0.75rem 1.75rem;
-        background: linear-gradient(135deg, #7c3aed, #4f46e5);
-        border: none;
-        border-radius: 0.625rem;
-        color: #fff;
-        font-size: 0.9375rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: opacity 0.2s, transform 0.1s;
-    }
-
-    .btn-stellar:hover {
-        opacity: 0.95;
-        transform: translateY(-1px);
-    }
-
-    .alert-stellar {
-        background: rgba(52, 211, 153, 0.1);
-        border: 1px solid rgba(52, 211, 153, 0.3);
-        color: #34d399;
-        border-radius: 0.625rem;
-        padding: 1rem 1.25rem;
-        margin-bottom: 2rem;
-        font-size: 0.875rem;
-    }
-
-    .badge-role {
-        display: inline-block;
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        color: #fff;
-        border-radius: 999px;
-        padding: 0.25rem 0.75rem;
-        font-size: 0.8125rem;
-        font-weight: 500;
-        margin-right: 0.5rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .role-request-section {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 0.875rem;
-        padding: 1.5rem;
-        margin-top: 2rem;
-    }
-
-    .request-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 1rem;
-        font-size: 0.875rem;
-    }
-
-    .request-table th {
-        text-align: left;
-        color: rgba(255, 255, 255, 0.4);
-        font-weight: 500;
-        padding: 0.75rem 0.5rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .request-table td {
-        padding: 0.75rem 0.5rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-        color: rgba(255, 255, 255, 0.8);
-    }
-
-    .status-badge {
-        display: inline-block;
-        padding: 0.15rem 0.5rem;
-        border-radius: 4px;
-        font-size: 0.75rem;
-        font-weight: 600;
-    }
-
-    .status-badge.status-pendente {
-        background: rgba(245, 158, 11, 0.15);
-        color: #f59e0b;
-        border: 1px solid rgba(245, 158, 11, 0.3);
-    }
-
-    .status-badge.status-aprovada {
-        background: rgba(16, 185, 129, 0.15);
-        color: #10b981;
-        border: 1px solid rgba(16, 185, 129, 0.3);
-    }
-
-    .status-badge.status-rejeitada {
-        background: rgba(239, 68, 68, 0.15);
-        color: #ef4444;
-        border: 1px solid rgba(239, 68, 68, 0.3);
-    }
 </style>
 }
 
-<div class="profile-container">
+<div class="container py-2" style="max-width: 900px;">
     @if (!string.IsNullOrEmpty(Model.StatusMessage))
     {
-        <div class="alert alert-stellar" id="profile-status-alert">
-            @Model.StatusMessage
+        <div class="alert alert-success border-0 shadow-sm rounded-3 p-3 mb-4 d-flex align-items-center gap-2" id="profile-status-alert" role="alert">
+            <span>✅</span> <span>@Model.StatusMessage</span>
         </div>
     }
 
-    <div class="profile-card">
-        <div class="profile-title">Meu Perfil</div>
-        <div class="profile-subtitle">Gerencie suas informações pessoais, escolha seu avatar e solicite permissões de acesso.</div>
+    <div class="card border-0 shadow-sm rounded-3 p-4 p-md-5 mb-4">
+        <div class="mb-4">
+            <h1 class="h3 fw-bold text-dark mb-1">Meu Perfil</h1>
+            <p class="text-secondary small mb-0">Gerencie suas informações pessoais, escolha seu avatar e solicite permissões de acesso.</p>
+        </div>
 
         <form method="post" asp-page-handler="UpdateProfile" id="profileForm">
             <input type="hidden" asp-for="Input.SelectedAvatarId" id="selected-avatar-id" />
 
-            <div class="avatar-selection-container">
-                <label>Escolha o seu Avatar</label>
+            <div class="mb-4">
+                <label class="form-label fw-bold text-secondary text-uppercase small mb-1" style="font-size: 0.75rem; letter-spacing: 0.05em;">Escolha o seu Avatar</label>
                 <div class="avatar-grid" id="avatarGrid">
                     @foreach (var avatar in Model.AvailableAvatars)
                     {
@@ -250,81 +79,95 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="Input.Nome">Nome Completo</label>
-                        <input asp-for="Input.Nome" id="profile-nome" placeholder="Seu nome" />
-                        <span asp-validation-for="Input.Nome" class="text-danger" style="font-size: 0.75rem;"></span>
+                    <div class="mb-3">
+                        <label asp-for="Input.Nome" class="form-label fw-bold text-secondary text-uppercase small mb-1" style="font-size: 0.75rem; letter-spacing: 0.05em;">Nome Completo</label>
+                        <input asp-for="Input.Nome" class="form-control" id="profile-nome" placeholder="Seu nome" />
+                        <span asp-validation-for="Input.Nome" class="text-danger small mt-1 d-block"></span>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label>E-mail (Não editável)</label>
-                        <input type="email" value="@Model.Email" readonly id="profile-email" />
+                    <div class="mb-3">
+                        <label class="form-label fw-bold text-secondary text-uppercase small mb-1" style="font-size: 0.75rem; letter-spacing: 0.05em;">E-mail (Não editável)</label>
+                        <input type="email" class="form-control bg-light text-secondary" value="@Model.Email" readonly id="profile-email" />
                     </div>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label>Seus Perfis Atuais</label>
-                <div id="user-roles">
+            <div class="mb-3">
+                <label class="form-label fw-bold text-secondary text-uppercase small mb-1" style="font-size: 0.75rem; letter-spacing: 0.05em;">Seus Perfis Atuais</label>
+                <div id="user-roles" class="d-flex flex-wrap gap-2 mt-1">
                     @if (Model.CurrentRoles.Any())
                     {
                         foreach (var role in Model.CurrentRoles)
                         {
-                            <span class="badge-role">@role</span>
+                            <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill">@role</span>
                         }
                     }
                     else
                     {
-                        <span style="color: rgba(255,255,255,0.4); font-size: 0.875rem;">Nenhum perfil associado.</span>
+                        <span class="text-secondary small">Nenhum perfil associado.</span>
                     }
                 </div>
             </div>
 
-            <button type="submit" id="profile-save-btn" class="btn-stellar mt-2">Salvar Alterações</button>
+            <button type="submit" id="profile-save-btn" class="btn btn-primary px-4 mt-3fw-semibold">Salvar Alterações</button>
         </form>
 
-        <div class="role-request-section">
-            <h3 class="profile-section-title">Solicitar Permissões de Acesso</h3>
-            <p style="color: rgba(255,255,255,0.5); font-size: 0.875rem; margin-bottom: 1.25rem;">
+        <div class="bg-light border rounded-3 p-4 mt-5">
+            <h3 class="h5 fw-bold text-dark mb-1">Solicitar Permissões de Acesso</h3>
+            <p class="text-secondary small mb-3">
                 Caso precise de permissões administrativas no sistema, solicite o perfil abaixo. Um administrador revisará sua solicitação.
             </p>
 
-            <form method="post" asp-page-handler="RequestRole" id="roleRequestForm" style="display: flex; gap: 1rem; align-items: center;">
-                <select name="roleName" class="form-select" id="role-select" style="background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.12); border-radius: 0.625rem; padding: 0.75rem 1rem; outline: none; width: 220px;">
-                    <option value="Admin" style="background: #24243e; color:#fff;">Admin</option>
+            <form method="post" asp-page-handler="RequestRole" id="roleRequestForm" style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+                <select name="roleName" class="form-select w-auto" id="role-select" style="min-width: 200px;">
+                    <option value="Admin">Admin</option>
                 </select>
-                <button type="submit" id="request-role-btn" class="btn-stellar" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">Enviar Solicitação</button>
+                <button type="submit" id="request-role-btn" class="btn btn-primary fw-semibold">Enviar Solicitação</button>
             </form>
 
             @if (Model.UserRoleRequests.Any())
             {
-                <h4 style="color:#fff; font-size: 1rem; font-weight:600; margin-top: 2rem; margin-bottom: 0.75rem;">Histórico de Solicitações</h4>
-                <table class="request-table" id="requestsHistoryTable">
-                    <thead>
-                        <tr>
-                            <th>Perfil</th>
-                            <th>Status</th>
-                            <th>Data Solicitação</th>
-                            <th>Data Processamento</th>
-                            <th>Processado Por</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var request in Model.UserRoleRequests)
-                        {
+                <h4 class="h6 fw-bold text-dark mt-4 mb-2">Histórico de Solicitações</h4>
+                
+                <div class="table-responsive border rounded-3 bg-white">
+                    <table class="table table-hover align-middle mb-0" id="requestsHistoryTable">
+                        <thead class="table-light">
                             <tr>
-                                <td><strong>@request.RoleNome</strong></td>
-                                <td>
-                                    <span class="status-badge status-@request.Status.ToLower()">@request.Status</span>
-                                </td>
-                                <td>@request.DataSolicitacao.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
-                                <td>@(request.DataProcessamento.HasValue ? request.DataProcessamento.Value.ToLocalTime().ToString("dd/MM/yyyy HH:mm") : "-")</td>
-                                <td>@(string.IsNullOrEmpty(request.ProcessadoPor) ? "-" : request.ProcessadoPor)</td>
+                                <th class="small text-uppercase text-secondary fw-bold" style="font-size: 0.75rem; letter-spacing: 0.05em;">Perfil</th>
+                                <th class="small text-uppercase text-secondary fw-bold" style="font-size: 0.75rem; letter-spacing: 0.05em;">Status</th>
+                                <th class="small text-uppercase text-secondary fw-bold" style="font-size: 0.75rem; letter-spacing: 0.05em;">Data Solicitação</th>
+                                <th class="small text-uppercase text-secondary fw-bold" style="font-size: 0.75rem; letter-spacing: 0.05em;">Data Processamento</th>
+                                <th class="small text-uppercase text-secondary fw-bold" style="font-size: 0.75rem; letter-spacing: 0.05em;">Processado Por</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var request in Model.UserRoleRequests)
+                            {
+                                <tr>
+                                    <td><strong>@request.RoleNome</strong></td>
+                                    <td>
+                                        @{
+                                            var badgeClass = "bg-warning-subtle text-warning border-warning-subtle";
+                                            if (request.Status.Equals("Aprovada", StringComparison.OrdinalIgnoreCase))
+                                            {
+                                                badgeClass = "bg-success-subtle text-success border-success-subtle";
+                                            }
+                                            else if (request.Status.Equals("Rejeitada", StringComparison.OrdinalIgnoreCase))
+                                            {
+                                                badgeClass = "bg-danger-subtle text-danger border-danger-subtle";
+                                            }
+                                        }
+                                        <span class="badge border rounded-pill @badgeClass">@request.Status</span>
+                                    </td>
+                                    <td>@request.DataSolicitacao.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
+                                    <td>@(request.DataProcessamento.HasValue ? request.DataProcessamento.Value.ToLocalTime().ToString("dd/MM/yyyy HH:mm") : "-")</td>
+                                    <td>@(string.IsNullOrEmpty(request.ProcessadoPor) ? "-" : request.ProcessadoPor)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             }
         </div>
     </div>
@@ -337,7 +180,10 @@
         document.querySelectorAll('.avatar-item').forEach(item => {
             item.classList.remove('active');
         });
-        document.getElementById('avatar-' + id).classList.add('active');
+        var targetAvatar = document.getElementById('avatar-' + id);
+        if (targetAvatar) {
+            targetAvatar.classList.add('active');
+        }
     }
 </script>
 }

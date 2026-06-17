@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="HtmlAgilityPack" Version="1.12.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="*" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="*">
       <PrivateAssets>all</PrivateAssets>

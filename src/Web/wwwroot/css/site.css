@@ -1,22 +1,177 @@
-html {
-  font-size: 14px;
-}
+/* Global Layout and Sidebar Styling */
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+:root {
+  --bg-app: #f4f6fa;
+  --bg-sidebar: #ffffff;
+  
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  
+  --border-color: #e2e8f0;
+  
+  --color-primary: #3b82f6;
+  --color-primary-hover: #1d4ed8;
+  --color-primary-light: #eff6ff;
+  
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.02);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.02);
+  --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.04), 0 10px 10px -5px rgba(0,0,0,0.02);
 }
 
 body {
-  margin-bottom: 60px;
+  background-color: var(--bg-app) !important;
+  color: var(--text-primary) !important;
+  font-family: 'Inter', sans-serif !important;
+  min-height: 100vh;
+  margin: 0;
+}
+
+/* Layout Structure: Sidebar + Content */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.app-sidebar {
+  width: 260px;
+  background-color: var(--bg-sidebar);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  padding: 2rem 1.25rem;
+  z-index: 100;
+}
+
+.app-sidebar-logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #e63946; /* Logo Vermelho no Estilo Tesla */
+  text-decoration: none !important;
+  margin-bottom: 2.5rem;
+  padding-left: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.app-sidebar-logo:hover {
+  color: #dc2626;
+}
+
+.app-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-grow: 1;
+}
+
+.app-sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: var(--text-secondary);
+  text-decoration: none !important;
+  font-weight: 500;
+  font-size: 0.925rem;
+  border-radius: 0.625rem;
+  transition: all 0.2s ease;
+}
+
+.app-sidebar-link:hover {
+  background-color: #f1f5f9;
+  color: var(--text-primary);
+}
+
+.app-sidebar-link.active {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.app-sidebar-footer {
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.25rem;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.app-main-content {
+  flex-grow: 1;
+  min-width: 0;
+  padding: 2.5rem;
+  background-color: var(--bg-app);
+}
+
+/* Responsividade Mobile - Top Navbar */
+.mobile-topbar {
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 105;
+}
+
+.mobile-logo {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #e63946;
+  text-decoration: none !important;
+  letter-spacing: 0.08em;
+}
+
+.mobile-toggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+/* Offcanvas Sidebar Responsiva */
+.mobile-sidebar-offcanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 280px;
+  background-color: #ffffff;
+  z-index: 1000;
+  box-shadow: var(--shadow-xl);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  padding: 2rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-sidebar-offcanvas.show {
+  transform: translateX(0);
+}
+
+.mobile-sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(15, 23, 42, 0.4);
+  z-index: 999;
+  display: none;
+  backdrop-filter: blur(2px);
+}
+
+.mobile-sidebar-overlay.show {
+  display: block;
 }

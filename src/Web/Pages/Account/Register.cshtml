@@ -4,153 +4,45 @@
     ViewData["Title"] = "Criar conta";
 }
 
-@section Styles {
-<style>
-    .auth-wrap {
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        padding-top: 3rem;
-    }
-
-    .auth-card {
-        background: rgba(255,255,255,0.05);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255,255,255,0.12);
-        border-radius: 1.25rem;
-        padding: 2.5rem 2rem;
-        width: 100%;
-        max-width: 440px;
-        box-shadow: 0 25px 50px rgba(0,0,0,0.4);
-    }
-
-    .auth-brand { text-align: center; margin-bottom: 2rem; }
-
-    .auth-brand h2 {
-        font-size: 1.5rem;
-        font-weight: 700;
-        background: linear-gradient(90deg, #a78bfa, #60a5fa);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin: 0;
-    }
-
-    .auth-brand p { color: rgba(255,255,255,0.5); font-size: 0.875rem; margin-top: 0.3rem; }
-
-    .auth-form-group { margin-bottom: 1.25rem; }
-
-    .auth-card label {
-        display: block;
-        font-size: 0.8125rem;
-        font-weight: 500;
-        color: rgba(255,255,255,0.7);
-        margin-bottom: 0.4rem;
-        letter-spacing: 0.03em;
-    }
-
-    .auth-card input[type="text"],
-    .auth-card input[type="email"],
-    .auth-card input[type="password"] {
-        width: 100%;
-        padding: 0.75rem 1rem;
-        background: rgba(255,255,255,0.07);
-        border: 1px solid rgba(255,255,255,0.15);
-        border-radius: 0.625rem;
-        color: #fff;
-        font-size: 0.9375rem;
-        font-family: 'Inter', sans-serif;
-        transition: border-color 0.2s, box-shadow 0.2s;
-        outline: none;
-    }
-
-    .auth-card input:focus {
-        border-color: #a78bfa;
-        box-shadow: 0 0 0 3px rgba(167,139,250,0.2);
-    }
-
-    .field-validation-error { color: #f87171; font-size: 0.75rem; margin-top: 0.3rem; display: block; }
-
-    .validation-summary-errors ul {
-        list-style: none;
-        background: rgba(248,113,113,0.1);
-        border: 1px solid rgba(248,113,113,0.3);
-        border-radius: 0.625rem;
-        padding: 0.75rem 1rem;
-        margin-bottom: 1.25rem;
-    }
-
-    .validation-summary-errors li { color: #f87171; font-size: 0.8125rem; }
-
-    .auth-btn {
-        width: 100%;
-        padding: 0.8125rem;
-        background: linear-gradient(135deg, #7c3aed, #4f46e5);
-        border: none;
-        border-radius: 0.625rem;
-        color: #fff;
-        font-size: 0.9375rem;
-        font-weight: 600;
-        font-family: 'Inter', sans-serif;
-        cursor: pointer;
-        transition: opacity 0.2s, transform 0.1s;
-        margin-top: 0.5rem;
-    }
-
-    .auth-btn:hover { opacity: 0.9; transform: translateY(-1px); }
-    .auth-btn:active { transform: translateY(0); }
-
-    .auth-footer-link {
-        text-align: center;
-        margin-top: 1.5rem;
-        font-size: 0.875rem;
-        color: rgba(255,255,255,0.45);
-    }
-
-    .auth-footer-link a { color: #a78bfa; text-decoration: none; font-weight: 500; }
-    .auth-footer-link a:hover { color: #c4b5fd; }
-</style>
-}
-
-<div class="auth-wrap">
-    <div class="auth-card">
-        <div class="auth-brand">
-            <h2>Criar sua conta</h2>
-            <p>Junte-se à plataforma InfraStellar</p>
+<div class="d-flex align-items-center justify-content-center py-5 w-100" style="min-height: 80vh;">
+    <div class="card border-0 shadow-sm rounded-3 p-4 p-md-5 w-100" style="max-width: 440px; background-color: #ffffff;">
+        <div class="text-center mb-4">
+            <h2 class="h4 fw-bold text-dark mb-1">Criar sua conta</h2>
+            <p class="text-secondary small mb-0">Junte-se à plataforma InfraStellar</p>
         </div>
 
-        <div asp-validation-summary="ModelOnly" class="validation-summary-errors"></div>
+        <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
 
         <form method="post" id="registerForm">
-            <div class="auth-form-group">
-                <label asp-for="Input.Nome">Nome completo</label>
-                <input asp-for="Input.Nome" id="register-nome" placeholder="Seu nome" autocomplete="name" />
-                <span asp-validation-for="Input.Nome" class="field-validation-error"></span>
+            <div class="mb-3">
+                <label asp-for="Input.Nome" class="form-label fw-bold text-secondary text-uppercase small mb-1" style="font-size: 0.75rem; letter-spacing: 0.05em;">Nome completo</label>
+                <input asp-for="Input.Nome" class="form-control" id="register-nome" placeholder="Seu nome" autocomplete="name" />
+                <span asp-validation-for="Input.Nome" class="text-danger small mt-1 d-block"></span>
             </div>
 
-            <div class="auth-form-group">
-                <label asp-for="Input.Email">E-mail</label>
-                <input asp-for="Input.Email" id="register-email" type="email" placeholder="seu@email.com" autocomplete="email" />
-                <span asp-validation-for="Input.Email" class="field-validation-error"></span>
+            <div class="mb-3">
+                <label asp-for="Input.Email" class="form-label fw-bold text-secondary text-uppercase small mb-1" style="font-size: 0.75rem; letter-spacing: 0.05em;">E-mail</label>
+                <input asp-for="Input.Email" class="form-control" id="register-email" type="email" placeholder="seu@email.com" autocomplete="email" />
+                <span asp-validation-for="Input.Email" class="text-danger small mt-1 d-block"></span>
             </div>
 
-            <div class="auth-form-group">
-                <label asp-for="Input.Senha">Senha</label>
-                <input asp-for="Input.Senha" id="register-senha" type="password" placeholder="Mínimo 6 caracteres" autocomplete="new-password" />
-                <span asp-validation-for="Input.Senha" class="field-validation-error"></span>
+            <div class="mb-3">
+                <label asp-for="Input.Senha" class="form-label fw-bold text-secondary text-uppercase small mb-1" style="font-size: 0.75rem; letter-spacing: 0.05em;">Senha</label>
+                <input asp-for="Input.Senha" class="form-control" id="register-senha" type="password" placeholder="Mínimo 6 caracteres" autocomplete="new-password" />
+                <span asp-validation-for="Input.Senha" class="text-danger small mt-1 d-block"></span>
             </div>
 
-            <div class="auth-form-group">
-                <label asp-for="Input.ConfirmarSenha">Confirmar senha</label>
-                <input asp-for="Input.ConfirmarSenha" id="register-confirmar-senha" type="password" placeholder="Repita a senha" autocomplete="new-password" />
-                <span asp-validation-for="Input.ConfirmarSenha" class="field-validation-error"></span>
+            <div class="mb-4">
+                <label asp-for="Input.ConfirmarSenha" class="form-label fw-bold text-secondary text-uppercase small mb-1" style="font-size: 0.75rem; letter-spacing: 0.05em;">Confirmar senha</label>
+                <input asp-for="Input.ConfirmarSenha" class="form-control" id="register-confirmar-senha" type="password" placeholder="Repita a senha" autocomplete="new-password" />
+                <span asp-validation-for="Input.ConfirmarSenha" class="text-danger small mt-1 d-block"></span>
             </div>
 
-            <button type="submit" id="register-submit" class="auth-btn">Criar conta</button>
+            <button type="submit" id="register-submit" class="btn btn-primary w-100 py-2 fw-semibold">Criar conta</button>
         </form>
 
-        <div class="auth-footer-link">
-            Já tem uma conta? <a asp-page="/Account/Login">Entrar</a>
+        <div class="text-center mt-4 small text-secondary">
+            Já tem uma conta? <a asp-page="/Account/Login" class="text-primary text-decoration-none fw-bold">Entrar</a>
         </div>
     </div>
 </div>

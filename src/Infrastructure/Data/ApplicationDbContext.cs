@@ -13,6 +13,8 @@ public class ApplicationDbContext : IdentityDbContext<Usuario, Perfil, Guid>
 
     public DbSet<Avatar> Avatares { get; set; }
     public DbSet<SolicitacaoRole> SolicitacoesRole { get; set; }
+    public DbSet<Alerta> Alertas { get; set; }
+    public DbSet<ResultadoAlerta> ResultadosAlerta { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
