@@ -85,7 +85,7 @@
         <span class="logo">InfraStellar</span>
         <div style="display:flex;align-items:center;gap:1rem;">
             <span class="badge-admin">🛡️ Admin</span>
-            <span style="color:rgba(255,255,255,0.5);font-size:0.875rem;">@User.Identity?.Name</span>
+            <span style="color:rgba(255,255,255,0.5);font-size:0.875rem;">@(User.FindFirst("Nome")?.Value ?? User.Identity?.Name)</span>
             <form method="post" action="/Account/Logout" style="display:inline">
                 <button type="submit" id="dashboard-logout" class="logout-link" style="background:none;border:none;cursor:pointer;">Sair</button>
             </form>
@@ -103,23 +103,65 @@
         <div class="stat-card">
             <div class="stat-icon">👥</div>
             <div class="stat-label">Usuários cadastrados</div>
-            <div class="stat-value" id="stat-usuarios">—</div>
+            <div class="stat-value" id="stat-usuarios">@Model.TotalUsers</div>
         </div>
         <div class="stat-card">
             <div class="stat-icon">🔐</div>
             <div class="stat-label">Perfis configurados</div>
-            <div class="stat-value" id="stat-perfis">—</div>
+            <div class="stat-value" id="stat-perfis">@Model.TotalRoles</div>
         </div>
         <div class="stat-card">
             <div class="stat-icon">🌐</div>
             <div class="stat-label">Ambiente</div>
-            <div class="stat-value" id="stat-ambiente">Production</div>
+            <div class="stat-value" id="stat-ambiente">Development</div>
         </div>
         <div class="stat-card">
             <div class="stat-icon">🛡️</div>
             <div class="stat-label">Autenticação</div>
             <div class="stat-value" style="font-size:1rem;color:#34d399;" id="stat-auth">Identity + Cookies</div>
         </div>
+    </div>
+
+    <div class="role-requests-section" style="margin-top: 2.5rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 1rem; padding: 2rem;">
+        <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1.25rem;">Solicitações de Perfis Pendentes</h2>
+        
+        @if (Model.PendingRequests.Any())
+        {
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.875rem;">
+                <thead>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                        <th style="padding: 0.75rem 0.5rem; text-align: left; color: rgba(255,255,255,0.4); font-weight: 500;">Usuário</th>
+                        <th style="padding: 0.75rem 0.5rem; text-align: left; color: rgba(255,255,255,0.4); font-weight: 500;">E-mail</th>
+                        <th style="padding: 0.75rem 0.5rem; text-align: left; color: rgba(255,255,255,0.4); font-weight: 500;">Perfil Solicitado</th>
+                        <th style="padding: 0.75rem 0.5rem; text-align: left; color: rgba(255,255,255,0.4); font-weight: 500;">Data</th>
+                        <th style="padding: 0.75rem 0.5rem; text-align: right; color: rgba(255,255,255,0.4); font-weight: 500;">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var request in Model.PendingRequests)
+                    {
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                            <td style="padding: 0.75rem 0.5rem;">@request.Usuario?.Nome</td>
+                            <td style="padding: 0.75rem 0.5rem; color: rgba(255,255,255,0.5);">@request.Usuario?.Email</td>
+                            <td style="padding: 0.75rem 0.5rem;"><span style="background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.25); color: #c4b5fd; border-radius: 999px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600;">@request.RoleNome</span></td>
+                            <td style="padding: 0.75rem 0.5rem;">@request.DataSolicitacao.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
+                            <td style="padding: 0.75rem 0.5rem; text-align: right;">
+                                <form method="post" style="display: inline-block; margin-right: 0.5rem;">
+                                    <button type="submit" asp-page-handler="ApproveRequest" asp-route-id="@request.Id" class="btn-approve" style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: #10b981; padding: 0.35rem 0.75rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: background 0.2s;">Aprovar</button>
+                                </form>
+                                <form method="post" style="display: inline-block;">
+                                    <button type="submit" asp-page-handler="RejectRequest" asp-route-id="@request.Id" class="btn-reject" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #ef4444; padding: 0.35rem 0.75rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: background 0.2s;">Rejeitar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div style="color: rgba(255,255,255,0.4); font-size: 0.875rem; text-align: center; padding: 1.5rem 0;">Nenhuma solicitação de perfil pendente.</div>
+        }
     </div>
 </body>
 </html>

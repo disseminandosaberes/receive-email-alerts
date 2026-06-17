@@ -31,11 +31,17 @@ public class RegisterModel : PageModel
         if (!ModelState.IsValid)
             return Page();
 
+        if (await _identityService.EmailJaCadastradoAsync(Input.Email))
+        {
+            ModelState.AddModelError("Input.Email", "Este e-mail já está cadastrado.");
+            return Page();
+        }
+
         var sucesso = await _identityService.RegistrarUsuarioAsync(Input);
 
         if (!sucesso)
         {
-            ModelState.AddModelError(string.Empty, "Não foi possível criar a conta. O e-mail pode já estar em uso ou a senha não atende aos requisitos.");
+            ModelState.AddModelError(string.Empty, "Não foi possível criar a conta. A senha pode não atender aos requisitos exigidos.");
             return Page();
         }
 

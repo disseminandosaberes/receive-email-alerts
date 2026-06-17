@@ -31,7 +31,8 @@ public static class DependencyInjection
             options.SignIn.RequireConfirmedAccount = false;
         })
         .AddEntityFrameworkStores<ApplicationDbContext>()
-        .AddDefaultTokenProviders();
+        .AddDefaultTokenProviders()
+        .AddClaimsPrincipalFactory<CustomClaimsPrincipalFactory>();
 
         // Registra a implementação concreta do serviço de identidade
         services.AddScoped<IIdentityService, IdentityService>();

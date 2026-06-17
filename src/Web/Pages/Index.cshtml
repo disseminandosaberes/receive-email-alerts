@@ -68,7 +68,7 @@
 
 <div class="home-hero">
     <div class="user-pill">
-        👋 Olá, <strong>@User.Identity?.Name</strong>
+        👋 Olá, <strong>@(User.FindFirst("Nome")?.Value ?? User.Identity?.Name)</strong>
     </div>
     <h1>InfraStellar Platform</h1>
     <p>Gerencie sua infraestrutura de forma inteligente, segura e escalável.</p>
