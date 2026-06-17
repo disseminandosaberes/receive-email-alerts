@@ -1,0 +1,104 @@
+@page
+@model InfraStellar.WebRazor.Pages.Alertas.CriarModel
+@using InfraStellar.Domain.Enums
+@{
+    ViewData["Title"] = "Novo Alerta";
+    var exemplosJson = System.Text.Json.JsonSerializer.Serialize(
+        Model.ExemplosUrl.ToDictionary(
+            kv => ((int)kv.Key).ToString(),
+            kv => kv.Value
+        )
+    );
+}
+
+<div class="mx-auto px-3" style="max-width: 640px;">
+    <div class="mb-4">
+        <h1 class="h3 fw-bold text-dark mb-1">➕ Novo Alerta</h1>
+        <p class="text-secondary small mb-0">Monitore novos editais e publicações automaticamente de forma estruturada.</p>
+    </div>
+
+    <div class="alert alert-info border-0 shadow-sm rounded-3 p-3 mb-4 d-flex align-items-start gap-2" role="alert">
+        <span class="fs-5">💡</span>
+        <div class="small">
+            <strong>Como funciona:</strong> Ao selecionar a fonte e informar a URL específica da publicação, o sistema irá consultar a página periodicamente. Ele identificará o edital ou documento mais recente adicionado e alertará você se uma nova publicação for detectada.
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-3 p-4">
+        <form method="post" id="form-criar">
+            <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="Input.Nome" class="form-label fw-bold text-secondary text-uppercase small mb-1" style="font-size: 0.75rem; letter-spacing: 0.05em;">Nome do Alerta</label>
+                <input asp-for="Input.Nome" class="form-control" id="input-nome" placeholder="Ex: Residência Técnica SEPLAG 2026" autocomplete="off" />
+                <span asp-validation-for="Input.Nome" class="text-danger small mt-1 d-block"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Input.TipoAlerta" class="form-label fw-bold text-secondary text-uppercase small mb-1" style="font-size: 0.75rem; letter-spacing: 0.05em;">Tipo / Fonte de Publicação</label>
+                <select asp-for="Input.TipoAlerta" class="form-select" id="select-tipo"
+                        asp-items="Html.GetEnumSelectList<InfraStellar.Domain.Enums.TipoAlerta>()">
+                </select>
+                <span asp-validation-for="Input.TipoAlerta" class="text-danger small mt-1 d-block"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Input.Url" class="form-label fw-bold text-secondary text-uppercase small mb-1" style="font-size: 0.75rem; letter-spacing: 0.05em;">URL da Página Específica</label>
+                <input asp-for="Input.Url" class="form-control" id="input-url" type="url" placeholder="Insira o link completo da página" />
+                <span asp-validation-for="Input.Url" class="text-danger small mt-1 d-block"></span>
+                <div class="form-text text-muted small mt-1">Cole o link da página do processo seletivo ou da listagem de editais específica que você deseja monitorar.</div>
+                <div class="font-monospace p-2 rounded border border-light-subtle bg-light text-primary mt-2 small text-break" id="exemplo-box" style="font-size: 0.78rem;"></div>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Input.IntervaloMinutos" class="form-label fw-bold text-secondary text-uppercase small mb-1" style="font-size: 0.75rem; letter-spacing: 0.05em;">Frequência de Verificação</label>
+                <select asp-for="Input.IntervaloMinutos" class="form-select" id="select-intervalo">
+                    <option value="5">A cada 5 minutos</option>
+                    <option value="15">A cada 15 minutos</option>
+                    <option value="30">A cada 30 minutos</option>
+                    <option value="60" selected>A cada 1 hora</option>
+                    <option value="180">A cada 3 horas</option>
+                    <option value="360">A cada 6 horas</option>
+                    <option value="720">A cada 12 horas</option>
+                    <option value="1440">Diariamente</option>
+                </select>
+                <span asp-validation-for="Input.IntervaloMinutos" class="text-danger small mt-1 d-block"></span>
+                <div class="form-text text-muted small mt-1">Defina de quanto em quanto tempo o sistema deve verificar o site em busca de novidades.</div>
+            </div>
+
+            <div class="d-flex gap-2 mt-4 pt-3 border-top">
+                <a href="/Alertas/Index" class="btn btn-outline-secondary px-4">Cancelar</a>
+                <button type="submit" class="btn btn-primary px-4 ms-auto" id="btn-salvar">💾 Salvar Alerta</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        const exemplos = @Html.Raw(exemplosJson);
+
+        const selectTipo = document.getElementById('select-tipo');
+        const inputUrl = document.getElementById('input-url');
+        const exemploBox = document.getElementById('exemplo-box');
+
+        function aplicarSugestao() {
+            const tipo = selectTipo.value;
+            const exemploUrl = exemplos[tipo];
+            if (exemploUrl) {
+                exemploBox.innerHTML = `<strong>Exemplo de URL esperada:</strong><br/>${exemploUrl}`;
+                exemploBox.style.display = 'block';
+                if (!inputUrl.value) {
+                    inputUrl.placeholder = exemploUrl;
+                }
+            } else {
+                exemploBox.style.display = 'none';
+                inputUrl.placeholder = "https://...";
+            }
+        }
+
+        selectTipo.addEventListener('change', aplicarSugestao);
+        aplicarSugestao(); // aplica na carga inicial
+    </script>
+}

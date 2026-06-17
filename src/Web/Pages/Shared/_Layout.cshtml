@@ -10,197 +10,185 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/InfraStellar.WebRazor.styles.css" asp-append-version="true" />
     @await RenderSectionAsync("Styles", required: false)
-    <style>
-        *, *::before, *::after { box-sizing: border-box; }
-
-        html, body {
-            height: 100%;
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            background-attachment: fixed;
-            color: #fff;
-        }
-
-        /* ── Navbar ── */
-        .navbar-stellar {
-            background: rgba(255,255,255,0.04);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            padding: 0.75rem 1.5rem;
-        }
-
-        .navbar-stellar .navbar-brand {
-            font-size: 1.2rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, #a78bfa, #60a5fa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-decoration: none;
-        }
-
-        .navbar-stellar .nav-link {
-            color: rgba(255,255,255,0.65) !important;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: color 0.2s;
-            padding: 0.25rem 0.75rem;
-        }
-
-        .navbar-stellar .nav-link:hover { color: #fff !important; }
-
-        .navbar-stellar .navbar-toggler {
-            border-color: rgba(255,255,255,0.2);
-        }
-
-        .navbar-stellar .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.6%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-        }
-
-        .nav-user-name {
-            color: rgba(255,255,255,0.5);
-            font-size: 0.8125rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .nav-user-name strong { color: rgba(255,255,255,0.85); margin-left: 0.25rem; }
-
-        .btn-nav-logout {
-            background: transparent;
-            border: 1px solid rgba(248,113,113,0.4);
-            color: #f87171;
-            border-radius: 0.5rem;
-            padding: 0.3rem 0.9rem;
-            font-size: 0.8125rem;
-            font-weight: 500;
-            font-family: 'Inter', sans-serif;
-            cursor: pointer;
-            transition: background 0.2s, color 0.2s;
-        }
-
-        .btn-nav-logout:hover {
-            background: rgba(248,113,113,0.12);
-            color: #fca5a5;
-        }
-
-        .btn-nav-login {
-            background: linear-gradient(135deg, #7c3aed, #4f46e5);
-            border: none;
-            color: #fff;
-            border-radius: 0.5rem;
-            padding: 0.35rem 1.1rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: opacity 0.2s, transform 0.1s;
-            display: inline-block;
-        }
-
-        .btn-nav-login:hover { opacity: 0.9; transform: translateY(-1px); color: #fff; }
-
-        .badge-admin {
-            background: linear-gradient(135deg, #7c3aed44, #4f46e544);
-            border: 1px solid rgba(167,139,250,0.3);
-            color: #c4b5fd;
-            border-radius: 999px;
-            padding: 0.2rem 0.6rem;
-            font-size: 0.7rem;
-            font-weight: 600;
-        }
-
-        /* ── Main content area ── */
-        .site-main {
-            min-height: calc(100vh - 57px);
-            padding: 2rem 0;
-        }
-
-        /* ── Footer ── */
-        .site-footer {
-            border-top: 1px solid rgba(255,255,255,0.07);
-            padding: 1rem 1.5rem;
-            text-align: center;
-            color: rgba(255,255,255,0.3);
-            font-size: 0.8125rem;
-        }
-
-        .site-footer a { color: rgba(167,139,250,0.7); text-decoration: none; }
-        .site-footer a:hover { color: #a78bfa; }
-    </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-sm navbar-stellar">
-        <div class="container-fluid px-3">
-            <a class="navbar-brand" asp-page="/Index">⭐ InfraStellar</a>
+    <div class="app-layout">
+        <!-- ── Desktop Sidebar (Visible on LG screens) ── -->
+        <aside class="app-sidebar d-none d-lg-flex">
+            <a class="app-sidebar-logo" asp-page="/Index">
+                ⭐ INFRASTELLAR
+            </a>
+            
+            <nav class="app-sidebar-nav">
+                <a class="app-sidebar-link @(ViewContext.RouteData.Values["page"]?.ToString() == "/Index" ? "active" : "")" asp-page="/Index">
+                    <span>🚀</span> Home
+                </a>
+                
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <a class="app-sidebar-link @(ViewContext.RouteData.Values["page"]?.ToString()?.StartsWith("/Alertas") == true ? "active" : "")" asp-page="/Alertas/Index">
+                        <span>🔔</span> Meus Alertas
+                    </a>
+                }
+                
+                @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+                {
+                    <a class="app-sidebar-link @(ViewContext.RouteData.Values["page"]?.ToString()?.StartsWith("/Admin") == true ? "active" : "")" asp-page="/Admin/Dashboard">
+                        <span>🛡️</span> Painel Admin
+                    </a>
+                }
+                
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <a class="app-sidebar-link @(ViewContext.RouteData.Values["page"]?.ToString() == "/Account/Profile" ? "active" : "")" asp-page="/Account/Profile">
+                        <span>👤</span> Meu Perfil
+                    </a>
+                }
+            </nav>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain"
-                    aria-controls="navMain" aria-expanded="false" aria-label="Menu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <div class="app-sidebar-footer">
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    var avatarId = User.FindFirst("AvatarId")?.Value;
+                    <a asp-page="/Account/Profile" class="d-flex align-items-center gap-2 text-decoration-none" style="color: inherit;" title="Acessar meu perfil">
+                        @if (!string.IsNullOrEmpty(avatarId))
+                        {
+                            <img src="/Account/Profile?handler=Avatar&id=@avatarId" alt="Avatar" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--color-primary);" />
+                        }
+                        else
+                        {
+                            <div style="width: 36px; height: 36px; border-radius: 50%; background: #f1f5f9; display: flex; align-items: center; justify-content: center; font-size: 0.875rem; border: 1px dashed var(--border-color);">👤</div>
+                        }
+                        <div class="d-flex flex-column" style="line-height: 1.2;">
+                            <span style="font-size: 0.8125rem; color: var(--text-secondary);">Olá,</span>
+                            <strong style="font-size: 0.875rem; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 130px;">@(User.FindFirst("Nome")?.Value ?? User.Identity?.Name)</strong>
+                        </div>
+                    </a>
+                    <form method="post" asp-page="/Account/Logout" class="m-0 w-100 mt-2">
+                        <button type="submit" id="nav-logout-btn-desktop" class="stellar-btn stellar-btn-danger w-100" style="padding: 0.45rem 1rem; font-size: 0.8125rem;">
+                            <span>🚪</span> Sair
+                        </button>
+                    </form>
+                }
+                else
+                {
+                    <a id="nav-login-btn-desktop" class="stellar-btn stellar-btn-primary w-100" asp-page="/Account/Login">
+                        <span>🔑</span> Entrar
+                    </a>
+                }
+            </div>
+        </aside>
 
-            <div class="collapse navbar-collapse" id="navMain">
-                <ul class="navbar-nav me-auto mb-0">
-                    <li class="nav-item">
-                        <a class="nav-link" asp-page="/Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-page="/Privacy">Privacy</a>
-                    </li>
+        <!-- ── Mobile Layout Container ── -->
+        <div class="d-flex flex-column w-100 min-vh-100">
+            <!-- ── Mobile Top Navbar (Visible on smaller screens) ── -->
+            <header class="mobile-topbar d-lg-none">
+                <a class="mobile-logo" asp-page="/Index">
+                    ⭐ INFRASTELLAR
+                </a>
+                <button class="mobile-toggle" onclick="toggleMobileSidebar()" aria-label="Menu">
+                    ☰
+                </button>
+            </header>
+
+            <!-- ── Mobile Sidebar Overlay ── -->
+            <div class="mobile-sidebar-overlay" id="sidebarOverlay" onclick="toggleMobileSidebar()"></div>
+
+            <!-- ── Mobile Sidebar Offcanvas ── -->
+            <div class="mobile-sidebar-offcanvas" id="mobileSidebar">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <a class="mobile-logo" asp-page="/Index" onclick="toggleMobileSidebar()">
+                        ⭐ INFRASTELLAR
+                    </a>
+                    <button class="mobile-toggle" onclick="toggleMobileSidebar()" style="font-size: 1.75rem;">
+                        &times;
+                    </button>
+                </div>
+                
+                <nav class="app-sidebar-nav">
+                    <a class="app-sidebar-link @(ViewContext.RouteData.Values["page"]?.ToString() == "/Index" ? "active" : "")" asp-page="/Index" onclick="toggleMobileSidebar()">
+                        <span>🚀</span> Home
+                    </a>
+                    
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <a class="app-sidebar-link @(ViewContext.RouteData.Values["page"]?.ToString()?.StartsWith("/Alertas") == true ? "active" : "")" asp-page="/Alertas/Index" onclick="toggleMobileSidebar()">
+                            <span>🔔</span> Meus Alertas
+                        </a>
+                    }
+                    
                     @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
                     {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-page="/Admin/Dashboard">⚙️ Admin</a>
-                        </li>
+                        <a class="app-sidebar-link @(ViewContext.RouteData.Values["page"]?.ToString()?.StartsWith("/Admin") == true ? "active" : "")" asp-page="/Admin/Dashboard" onclick="toggleMobileSidebar()">
+                            <span>🛡️</span> Painel Admin
+                        </a>
                     }
-                </ul>
+                    
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <a class="app-sidebar-link @(ViewContext.RouteData.Values["page"]?.ToString() == "/Account/Profile" ? "active" : "")" asp-page="/Account/Profile" onclick="toggleMobileSidebar()">
+                            <span>👤</span> Meu Perfil
+                        </a>
+                    }
+                </nav>
 
-                <div class="d-flex align-items-center gap-3">
+                <div class="app-sidebar-footer mt-auto">
                     @if (User.Identity?.IsAuthenticated == true)
                     {
                         var avatarId = User.FindFirst("AvatarId")?.Value;
-                        <a asp-page="/Account/Profile" class="d-flex align-items-center gap-2 text-decoration-none" id="nav-profile-link" style="color: inherit;" title="Acessar meu perfil">
+                        <a asp-page="/Account/Profile" class="d-flex align-items-center gap-2 text-decoration-none mb-2" style="color: inherit;" onclick="toggleMobileSidebar()">
                             @if (!string.IsNullOrEmpty(avatarId))
                             {
-                                <img src="/Account/Profile?handler=Avatar&id=@avatarId" alt="Avatar" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 1.5px solid rgba(167,139,250,0.5);" />
+                                <img src="/Account/Profile?handler=Avatar&id=@avatarId" alt="Avatar" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--color-primary);" />
                             }
                             else
                             {
-                                <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; font-size: 0.875rem; border: 1px dashed rgba(255,255,255,0.2);">👤</div>
+                                <div style="width: 36px; height: 36px; border-radius: 50%; background: #f1f5f9; display: flex; align-items: center; justify-content: center; font-size: 0.875rem; border: 1px dashed var(--border-color);">👤</div>
                             }
-                            <span class="nav-user-name">Olá, <strong>@(User.FindFirst("Nome")?.Value ?? User.Identity?.Name)</strong></span>
+                            <div class="d-flex flex-column" style="line-height: 1.2;">
+                                <span style="font-size: 0.8125rem; color: var(--text-secondary);">Olá,</span>
+                                <strong style="font-size: 0.875rem; color: var(--text-primary);">@(User.FindFirst("Nome")?.Value ?? User.Identity?.Name)</strong>
+                            </div>
                         </a>
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <span class="badge-admin">Admin</span>
-                        }
-                        <form method="post" asp-page="/Account/Logout" class="m-0">
-                            <button type="submit" id="nav-logout-btn" class="btn-nav-logout">Sair</button>
+                        <form method="post" asp-page="/Account/Logout" class="m-0 w-100">
+                            <button type="submit" id="nav-logout-btn-mobile" class="stellar-btn stellar-btn-danger w-100" style="padding: 0.45rem 1rem; font-size: 0.8125rem;">
+                                <span>🚪</span> Sair
+                            </button>
                         </form>
                     }
                     else
                     {
-                        <a id="nav-login-btn" class="btn-nav-login" asp-page="/Account/Login">Entrar</a>
+                        <a id="nav-login-btn-mobile" class="stellar-btn stellar-btn-primary w-100" asp-page="/Account/Login" onclick="toggleMobileSidebar()">
+                            <span>🔑</span> Entrar
+                        </a>
                     }
                 </div>
             </div>
-        </div>
-    </nav>
 
-    <main class="site-main">
-        <div class="container">
-            @RenderBody()
-        </div>
-    </main>
+            <!-- ── Main Content Area ── -->
+            <main class="app-main-content flex-grow-1">
+                <div class="container-fluid p-0">
+                    @RenderBody()
+                </div>
+            </main>
 
-    <footer class="site-footer">
-        &copy; 2026 InfraStellar &mdash; <a asp-page="/Privacy">Privacy</a>
-    </footer>
+        </div>
+    </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        function toggleMobileSidebar() {
+            var sidebar = document.getElementById('mobileSidebar');
+            var overlay = document.getElementById('sidebarOverlay');
+            if (sidebar && overlay) {
+                sidebar.classList.toggle('show');
+                overlay.classList.toggle('show');
+            }
+        }
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

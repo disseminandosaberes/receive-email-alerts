@@ -1,7 +1,9 @@
 using InfraStellar.Application.Interfaces;
 using InfraStellar.Domain.Entities;
+using InfraStellar.Infrastructure.BackgroundServices;
 using InfraStellar.Infrastructure.Data;
 using InfraStellar.Infrastructure.Identity;
+using InfraStellar.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -36,6 +38,22 @@ public static class DependencyInjection
 
         // Registra a implementação concreta do serviço de identidade
         services.AddScoped<IIdentityService, IdentityService>();
+
+        // Registra o HttpClient para realizar requisições leves de scraping
+        services.AddHttpClient();
+
+        // Registra o serviço de scraping (HttpClient + HtmlAgilityPack)
+        services.AddScoped<IScrapingService, ScrapingService>();
+
+        // Registra o serviço de notificação (mock — retorna true por enquanto)
+        services.AddScoped<INotificacaoService, NotificacaoService>();
+
+        // Registra o AlertaService (como interface e como concreto — background service usa o concreto)
+        services.AddScoped<AlertaService>();
+        services.AddScoped<IAlertaService>(sp => sp.GetRequiredService<AlertaService>());
+
+        // Background service que executa alertas automaticamente em segundo plano
+        services.AddHostedService<AlertaBackgroundService>();
 
         return services;
     }
